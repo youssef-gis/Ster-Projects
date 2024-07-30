@@ -52,7 +52,7 @@ def main():
             elif row["Etat_projet"] == "Conclu":
                 color="#008000"
 
-            folium.Marker(location=[row['geometry'].y, row['geometry'].x], tooltip=row['identifiant_projet'],popup=folium.Popup(popup_content, parse_html=False, max_width="1000"),  icon=folium.Icon(icon_color=color)).add_to(mcg)
+            folium.Marker(location=[row['geometry'].y, row['geometry'].x], tooltip=row['identifiant_projet'],popup=folium.Popup(popup_content, parse_html=False, max_width="1000"),  icon=folium.Icon(icon_color=color, icon='home')).add_to(mcg)
 
                 # add the marker cluster group to the folium map
         mcg.add_to(m)
