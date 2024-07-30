@@ -12,15 +12,19 @@ from streamlit_folium import st_folium, folium_static
 st.set_page_config(layout="wide")
 date_format = "%Y-%m-%d"
 
+@st.cache_resource
+def import_csv_as_df(csv_file):
+    df = pd.read_csv(csv_file)
+    return df
 
 def main():
-
-    st.title('STER PROJETS')
     
+    st.title('STER PROJETS')
+
     # Upload CSV file
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file:
-        df= pd.read_csv(uploaded_file)
+        df= import_csv_as_df(uploaded_file)
         print(df.Etat_projet)
         geometry = [Point(xy) for xy in zip(df['longitude'], df['latitude'])]
         gdf = gpd.GeoDataFrame(df, geometry=geometry)
