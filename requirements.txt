@@ -1,0 +1,8 @@
+numpy
+altair
+pandas
+leafmap
+geopandas
+shapely
+folium
+streamlit_folium
