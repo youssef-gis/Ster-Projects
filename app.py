@@ -16,7 +16,7 @@ date_format = "%Y-%m-%d"
 def main():
 
     st.title('STER PROJETS')
-
+    @st.cache
     # Upload CSV file
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file:
