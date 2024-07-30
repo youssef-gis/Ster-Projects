@@ -12,7 +12,7 @@ from streamlit_folium import st_folium, folium_static
 st.set_page_config(layout="wide")
 date_format = "%Y-%m-%d"
 
-@st.cache_resource
+
 def import_csv_as_df(csv_file):
     df = pd.read_csv(csv_file)
     return df
