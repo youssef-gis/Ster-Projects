@@ -58,7 +58,7 @@ def main():
 
                 # add the marker cluster group to the folium map
         mcg.add_to(m)
-        st_folium(m)
+         m.to_streamlit()
 
 if __name__  =='__main__':
     main()
