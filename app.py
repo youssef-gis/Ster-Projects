@@ -42,7 +42,7 @@ def main():
         m.add(widget_control1)
  
                 #create a marker cluster group for the closest points
-        mcg = MarkerCluster()
+        mcg = MarkerCluster(name="Projets")
         for idx, row in gdf.iterrows():
             popup_content = "<b>"+"Id projet: "+"</b>" + str(row["identifiant_projet"])+ "<br>" +  "<b>"+"Projet: "+"</b>"  + row["projet"] + "<br>" +"<b>"+ "Etat: "+"</b>" +row["Etat_projet"]
             if row["Etat_projet"] == "En_attente":
