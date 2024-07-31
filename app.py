@@ -74,10 +74,7 @@ def main():
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
-            print("test new push.1")
 
-            # Display the pie chart in the Streamlit app
-            st.plotly_chart(fig)
 
 
 
