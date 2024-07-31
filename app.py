@@ -73,7 +73,7 @@ def main():
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
-            print("shuss11")
+           
 
 
 
