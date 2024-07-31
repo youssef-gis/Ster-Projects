@@ -59,6 +59,7 @@ def main():
 
         # Add content to the second column
         with col2:
+            st.header('Pie Chart')
             # Aggregate data: Count occurrences of each category
             category_counts = df['Etat_projet'].value_counts().reset_index()
             category_counts.columns = ['Etat_projet', 'Count']
@@ -67,8 +68,7 @@ def main():
             fig = px.pie(category_counts, names='Etat_projet',color_discrete_sequence=px.colors.diverging.RdYlGn,
             # Custom color sequence
             hole=0.3,  # Create a donut chart with a hole in the cent,
-            values='Count', 
-            title='Pie Chart')
+            values='Count')
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
