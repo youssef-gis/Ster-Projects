@@ -26,7 +26,7 @@ def main():
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file:
         df= import_csv_as_df(uploaded_file)
-        print(df.columns)
+        
         geometry = [Point(xy) for xy in zip(df['longitude'], df['latitude'])]
         gdf = gpd.GeoDataFrame(df, geometry=geometry)
         gdf.crs = 'EPSG:4326'
@@ -47,7 +47,7 @@ def main():
                 if row["Etat_projet"] == "En_attente":
                     color= "#FF0000"
                 elif row["Etat_projet"] == "En_cours":
-                    color="#fbff00"
+                    color="orange"
                 elif row["Etat_projet"] == "Conclu":
                     color="#008000"
 
@@ -64,12 +64,18 @@ def main():
             # Aggregate data: Count occurrences of each category
             category_counts = df['Etat_projet'].value_counts().reset_index()
             category_counts.columns = ['Etat_projet', 'Count']
-
+            print(category_counts)
+            # Define custom colors for each category
+            color_map = {
+                "En_cours": "orange",
+                "En_attente": "red",
+                "Conclu": "green"
+            }
             # Create a pie chart using Plotly Express
-            fig = px.pie(category_counts, names='Etat_projet',color_discrete_sequence=px.colors.diverging.RdYlGn,
-            # Custom color sequence
-             hole=0.3,  # Create a donut chart with a hole in the cent,
-            values='Count', title='Sample Pie Chart')
+            fig = px.pie(category_counts, names='Etat_projet', values='Count',  color='Etat_projet',color_discrete_map=color_map,
+   
+             hole=0.3  # Create a donut chart with a hole in the cent,
+            )
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
