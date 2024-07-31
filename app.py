@@ -67,7 +67,8 @@ def main():
             fig = px.pie(category_counts, names='Etat_projet',color_discrete_sequence=px.colors.diverging.RdYlGn,
             # Custom color sequence
             hole=0.3,  # Create a donut chart with a hole in the cent,
-            values='Count')
+            values='Count', 
+            title='Pie Chart')
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
