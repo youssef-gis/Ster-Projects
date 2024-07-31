@@ -71,7 +71,7 @@ def main():
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
-            print("test new push")
+            print("test new push.1")
 
 if __name__  =='__main__':
     main()
