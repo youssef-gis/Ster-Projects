@@ -68,13 +68,13 @@ def main():
             # Create a pie chart using Plotly Express
             fig = px.pie(category_counts, names='Etat_projet',color_discrete_sequence=px.colors.diverging.RdYlGn,
             # Custom color sequence
-
              hole=0.3,  # Create a donut chart with a hole in the cent,
             values='Count', title='Sample Pie Chart')
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
-            print("test new shush11")
+
+
 
 
 if __name__  =='__main__':
