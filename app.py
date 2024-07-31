@@ -8,9 +8,7 @@ import folium
 from folium.plugins import Geocoder, Fullscreen
 from folium.plugins import MarkerCluster
 from streamlit_folium import st_folium, folium_static
-from ipyleaflet import Map, basemaps, WidgetControl
-from ipywidgets import IntSlider, ColorPicker, jslink
-
+import plotly.express as px
 
 st.set_page_config(layout="wide")
 date_format = "%Y-%m-%d"
@@ -33,31 +31,47 @@ def main():
         gdf = gpd.GeoDataFrame(df, geometry=geometry)
         gdf.crs = 'EPSG:4326'
         points_df = gdf[['latitude', 'longitude']]
+        # Create columns
+        col1, col2 = st.columns(2)
 
-        map_center = [points_df['latitude'].mean(), points_df['longitude'].mean()]
-        m= leafmap.Map(location=map_center, draw_control=False, measure_control=False, zoom=5 )
-        zoom_slider = IntSlider(description='Zoom level:', min=0, max=15, value=7)
-        #jslink((zoom_slider, 'value'), (m, 'zoom'))
-        widget_control1 = WidgetControl(widget=zoom_slider, position='topright')
-        m.add(widget_control1)
- 
-                #create a marker cluster group for the closest points
-        mcg = MarkerCluster(name="Projets")
-        for idx, row in gdf.iterrows():
-            popup_content = "<b>"+"Id projet: "+"</b>" + str(row["identifiant_projet"])+ "<br>" +  "<b>"+"Projet: "+"</b>"  + row["projet"] + "<br>" +"<b>"+ "Etat: "+"</b>" +row["Etat_projet"]
-            if row["Etat_projet"] == "En_attente":
-                color= "#FF0000"
-            elif row["Etat_projet"] == "En_cours":
-                color="#fbff00"
-            elif row["Etat_projet"] == "Conclu":
-                color="#008000"
+        # Add content to the first column
+        with col1:
 
-            folium.Marker(location=[row['geometry'].y, row['geometry'].x], tooltip=row['identifiant_projet'],popup=folium.Popup(popup_content, parse_html=False, max_width="1000"),  icon=folium.Icon(icon_color=color, icon='home')).add_to(mcg)
+            map_center = [points_df['latitude'].mean(), points_df['longitude'].mean()]
+            m= leafmap.Map(location=map_center, draw_control=False, measure_control=False, zoom=5 )
+    
+                    #create a marker cluster group for the closest points
+            mcg = MarkerCluster(name="Projets")
+            for idx, row in gdf.iterrows():
+                popup_content = "<b>"+"Id projet: "+"</b>" + str(row["identifiant_projet"])+ "<br>" +  "<b>"+"Projet: "+"</b>"  + row["projet"] + "<br>" +"<b>"+ "Etat: "+"</b>" +row["Etat_projet"]
+                if row["Etat_projet"] == "En_attente":
+                    color= "#FF0000"
+                elif row["Etat_projet"] == "En_cours":
+                    color="#fbff00"
+                elif row["Etat_projet"] == "Conclu":
+                    color="#008000"
 
-                # add the marker cluster group to the folium map
-        mcg.add_to(m)
-        m.to_streamlit()
+                folium.Marker(location=[row['geometry'].y, row['geometry'].x], tooltip=row['identifiant_projet'],popup=folium.Popup(popup_content, parse_html=False, max_width="1000"),  icon=folium.Icon(icon_color=color, icon='home')).add_to(mcg)
+
+                    # add the marker cluster group to the folium map
+            mcg.add_to(m)
+            m.to_streamlit()
+
+        # Add content to the second column
+        with col2:
+            # Aggregate data: Count occurrences of each category
+            category_counts = df['Etat_projet'].value_counts().reset_index()
+            category_counts.columns = ['Etat_projet', 'Count']
+
+            # Create a pie chart using Plotly Express
+            fig = px.pie(category_counts, names='Etat_projet',color_discrete_sequence=px.colors.diverging.RdYlGn,
+            # Custom color sequence
+            hole=0.3,  # Create a donut chart with a hole in the cent,
+            values='Count')
+
+            # Display the pie chart in the Streamlit app
+            st.plotly_chart(fig)
+
 
 if __name__  =='__main__':
     main()
-
