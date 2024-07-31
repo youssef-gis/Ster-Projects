@@ -59,10 +59,8 @@ def main():
 
         # Add content to the second column
         with col2:
-<<<<<<< HEAD
-=======
             st.header('Pie Chart')
->>>>>>> fe792aa2d7562c8d7f48adb19b000adeafbc4186
+
             # Aggregate data: Count occurrences of each category
             category_counts = df['Etat_projet'].value_counts().reset_index()
             category_counts.columns = ['Etat_projet', 'Count']
@@ -70,21 +68,14 @@ def main():
             # Create a pie chart using Plotly Express
             fig = px.pie(category_counts, names='Etat_projet',color_discrete_sequence=px.colors.diverging.RdYlGn,
             # Custom color sequence
-<<<<<<< HEAD
+
              hole=0.3,  # Create a donut chart with a hole in the cent,
             values='Count', title='Sample Pie Chart')
 
             # Display the pie chart in the Streamlit app
             st.plotly_chart(fig)
-            print("test new push.1")
-=======
-            hole=0.3,  # Create a donut chart with a hole in the cent,
-            values='Count')
+            print("test new shush11")
 
-            # Display the pie chart in the Streamlit app
-            st.plotly_chart(fig)
-
->>>>>>> fe792aa2d7562c8d7f48adb19b000adeafbc4186
 
 if __name__  =='__main__':
     main()
